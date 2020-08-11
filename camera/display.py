@@ -1,3 +1,4 @@
+import argparse
 import cv2
 import numpy as np
 import time
@@ -5,17 +6,9 @@ from threading import Thread
 from queue import Queue
 
 
-# Create a VideoCapture object and read from input file
-# If the input is the camera, pass 0 instead of the video file name
-
-# URL = 'rtsp://10.0.0.155/nph-h264.cgi'
-# URL = 'http://10.0.0.155/nph-h264.cgi'
-URL = 'http://10.0.0.155/nph-mjpeg.cgi'
-
-
-def stream_images(q):
+def stream_images(url, q):
     while True:
-        cap = cv2.VideoCapture(URL)
+        cap = cv2.VideoCapture(url)
         if cap.isOpened():
             break
         time.sleep(1)
@@ -30,8 +23,12 @@ def stream_images(q):
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('url')
+    args = parser.parse_args()
+
     q = Queue()
-    t = Thread(target=stream_images, args=(q,), daemon=True)
+    t = Thread(target=stream_images, args=(args.url, q), daemon=True)
     t.start()
 
     try:

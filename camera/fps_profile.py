@@ -5,14 +5,9 @@ from queue import Queue
 import cv2
 
 
-#URL = 'rtsp://10.0.0.155/nph-h264.cgi'
-#URL = 'http://10.0.0.155/nph-h264.cgi'
-URL = 'http://10.0.0.155/nph-mjpeg.cgi'
-
-
-def run_worker(id, q):
+def run_worker(url, id, q):
     while True:
-        cap = cv2.VideoCapture(URL)
+        cap = cv2.VideoCapture(url)
         if cap.isOpened():
             break
         cap.close()
@@ -31,8 +26,8 @@ def run_worker(id, q):
         q.put((id, rate))
 
 
-def get_stream_resolution():
-    cap = cv2.VideoCapture(URL)
+def get_stream_resolution(url):
+    cap = cv2.VideoCapture(url)
 
     while True:
         ok, frame = cap.read()
@@ -43,6 +38,7 @@ def get_stream_resolution():
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument('url')
     parser.add_argument('n', type=int)
     args = parser.parse_args()
 
@@ -50,16 +46,16 @@ def main():
 
     q = Queue()
 
-    resolution = get_stream_resolution()
+    resolution = get_stream_resolution(args.url)
 
     for i in range(args.n):
-        t = Thread(target=run_worker, args=(i, q), daemon=True)
+        t = Thread(target=run_worker, args=(args.url, i, q), daemon=True)
         t.start()
 
     while True:
         id, rate = q.get()
         rates[id] = round(rate, 3)
-        print(URL, resolution, *rates, sep='\t')
+        print(args.url, resolution, *rates, sep='\t')
 
 
 if __name__ == '__main__':
