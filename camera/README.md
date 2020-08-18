@@ -2,7 +2,7 @@
 
 ## display.py
 
-Tool for rendering camera frames as fast as possible. This is intended to:
+Tool for rendering camera frames as fast as possible to help estimate the upper bound on latency. This is intended to:
 
 1. Get a more direct measure of how well OpenCV gets data.
 2. Bypass ffplay which, by default, has vrey high latency when playing back video. (There are probably buffering settings we should figure out...)

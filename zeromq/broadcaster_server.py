@@ -10,3 +10,4 @@ data = bytes(640*480*3)
 
 while True:
     socket.send(struct.pack('Q', time.time_ns()) + data)
+    time.sleep(1/100)

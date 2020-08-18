@@ -1,20 +1,22 @@
-import zmq
+from redis import Redis
 import time
 import struct
+from base64 import b64decode
 
-context = zmq.Context()
-socket = context.socket(zmq.SUB)
-socket.connect('tcp://localhost:5556')
-
-socket.setsockopt_string(zmq.SUBSCRIBE, '')
+r = Redis()
 
 batch_size = 100
+
+s = r.pubsub()
+s.subscribe("data")
+
+print(s.get_message(timeout=10.0))
 
 while True:
     start = time.monotonic()
     max_delay_ms = 0.0
     for _ in range(batch_size):
-        data = socket.recv()
+        data = b64decode(s.get_message(timeout=10.0)['data'])
         now = time.time_ns()
         send_time, = struct.unpack_from('Q', data)
         delay_ms = (now - send_time) / 10e6
