@@ -1,17 +1,13 @@
-# Stardot Tools
+# Stardot Push Under Stress
 
-## Push with Stressed Pull Test
-
-One of the tests we was checking how the Stardot's push was affected by numerous heavy parallel pulls.
-
-The experiment flow is as follows:
+This test checks how the Stardot's push is affected by numerous simultanious heavy parallel pulls. The experiment flow is as follows:
 
 1. The Stardot reads image _from same device used by the FTP uploader and Phenocam_ and sends to receiver.
 2. The receiver saves a timestamped image.
 3. The receiver (or another machine on the network) spins up multiple parallel consumers pulling data from the Stardot's MJPEG endpoint. This data is simply pulled as fast as possible and discarded to stress the camera.
 4. The timestamped images can be checked for timing consistency and errors.
 
-### 0. Machine Setup
+## 0. Machine Setup
 
 ```txt
 +---------+  Push JPEG every 30s  +------------------+
@@ -21,7 +17,7 @@ The experiment flow is as follows:
 
 You'll need to know the IP address of your Stardot and receiver machine for this.
 
-### 1. Setup Stardot
+## 1. Setup Stardot
 
 First, login into your Stardot.
 
@@ -56,7 +52,7 @@ Finally, we want to save the config.
 config save
 ```
 
-### 2. Setup Receiver
+## 2. Setup Receiver
 
 The receiver listens for incoming images and saves them.
 
@@ -78,7 +74,7 @@ done
 
 Running `./listen-for-images.sh` will start the listener and write each image received to `images/TIMESTAMP.jpg`.
 
-### 3. Stressing Stardot
+## 3. Stressing Stardot
 
 We can spin up multiple consumers pulling video data using:
 
