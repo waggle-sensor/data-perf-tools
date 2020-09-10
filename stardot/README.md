@@ -14,7 +14,11 @@ One of the tests we was checking how the Stardot's push was affected by numerous
 
 You'll need to know the IP address of your Stardot and receiver machine for this.
 
-This experiment reads from the same image device used by the FTP uploader used by the Stardot and Phenocam and sends it over the network to the receiver. The receiver saves the images based on timestamp so that we can check for timing consistency and errors in the images.
+The experiment flow is as follows:
+
+1. The Stardot reads image _from same device used by the FTP uploader_ and sends to receiver.
+2. The receiver saves a timestamped image.
+3. The timestamped images can be checked for timing consistency and errors.
 
 ### 1. Setup Stardot
 
