@@ -79,7 +79,7 @@ Running `./listen-for-images.sh` will start the listener and write each image re
 We can spin up multiple consumers pulling video data using:
 
 ```sh
-seq 8 | xargs -n 1 -P 8 bash -c 'curl -s http://stardot-ip/nph-mjpeg.cgi > /dev/null'
+seq 8 | xargs -n 1 -P 8 bash -c 'while true; do echo pulling; curl -s http://10.0.0.74/nph-mjpeg.cgi > /dev/null; done'
 ```
 
 This runs 8 parallel consumers pulling video data as fast as possible. Note that it is only pulling the raw video bytes and not processing the video data in any way. This is because we are primarily interested in how pulling affect the periodic push.
