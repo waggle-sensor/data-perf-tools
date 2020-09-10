@@ -13,6 +13,13 @@ This test checks how the Stardot's push is affected by numerous simultanious hea
 +---------+  Push JPEG every 30s  +------------------+
 | Stardot | --------------------> | Receiver Machine |
 +---------+                       +------------------+
+    |||
+    ||| Multiple parallel
+    ||| video pulls.
++----------------+
+| Stress Machine |
+| (or receiver)  |
++----------------+
 ```
 
 You'll need to know the IP address of your Stardot and receiver machine for this.
