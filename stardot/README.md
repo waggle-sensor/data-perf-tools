@@ -28,7 +28,7 @@ You'll need to know the IP address of your Stardot and receiver machine for this
 First, login into your Stardot.
 
 ```sh
-telnet stardot-ip
+telnet STARDOT-IP
 ```
 
 Next, add the following upload script to `/etc/config/upload-image.sh` and ensure it is executable.
@@ -40,7 +40,7 @@ now=`date +%s`
 
 cat <<EOF > /tmp/upload.scr
 timeout 30
-open 10.0.0.5
+open RECEIVER-IP
 user stardot stardot
 passive
 ascii
@@ -81,7 +81,7 @@ We can spin up multiple consumers pulling video data using:
 seq 8 | xargs -n 1 -P 8 bash -c '
 while true; do
   echo $(date) pulling
-  curl -s http://stardot-ip/nph-mjpeg.cgi > /dev/null
+  curl -s http://STARDOT-IP/nph-mjpeg.cgi > /dev/null
   sleep 1
 done
 '
