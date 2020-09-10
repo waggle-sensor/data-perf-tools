@@ -35,9 +35,9 @@ while true; do
   cat /dev/video/jpeg0 | nc receiver-ip 10000
   sleep 30
 done
+EOF
 
 chmod +x /etc/config/send-image.sh
-EOF
 ```
 
 Now, add this line to `/etc/config/start` so it can run at start up.
