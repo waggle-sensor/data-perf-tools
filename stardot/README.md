@@ -51,6 +51,8 @@ put /dev/video/jpeg0 camera0.jpg.tmp
 rename camera0.jpg.tmp "images/$now.jpg"
 quit
 EOF
+
+ftpscript /tmp/upload.scr
 ```
 
 Now, ensure that `/etc/config/crontab` includes the following line.
