@@ -2,7 +2,7 @@
 
 This test checks how the Stardot's push is affected by numerous simultanious heavy parallel pulls. The experiment flow is as follows:
 
-1. *Reproduce Current Image Acquisition Behavior*: Every 30s, the Stardot reads image _from same device used by the FTP uploader and Phenocam_ and sends to receiver.
+1. *Reproduce NEON Image Acquisition Behavior*: Every 30s, the Stardot reads image _from same device used by the FTP uploader and Phenocam_ and sends to receiver.
 2. *Log Data*: The receiver saves timestamped images as they are received.
 3. *Emulate Sage Nodes*: Stress Machine spins up multiple parallel consumers pulling data from the Stardot's MJPEG endpoint. This data is simply pulled as fast as possible and discarded to stress the camera.
 4. *Validation of NEON Image Stream*: The timestamped images will be checked for timing consistency and errors.
