@@ -3,7 +3,7 @@
 This test checks how the Stardot's push is affected by numerous simultanious heavy parallel pulls. The experiment flow is as follows:
 
 1. Every 30s, the Stardot reads image _from same device used by the FTP uploader and Phenocam_ and sends to receiver.
-2. The receiver saves a timestamped image.
+2. The receiver saves timestamped images as they are received.
 3. The receiver (or another machine on the network) spins up multiple parallel consumers pulling data from the Stardot's MJPEG endpoint. This data is simply pulled as fast as possible and discarded to stress the camera.
 4. The timestamped images will be checked for timing consistency and errors.
 
