@@ -4,6 +4,13 @@
 
 One of the tests we was checking how the Stardot's push was affected by numerous heavy parallel pulls.
 
+The experiment flow is as follows:
+
+1. The Stardot reads image _from same device used by the FTP uploader and Phenocam_ and sends to receiver.
+2. The receiver saves a timestamped image.
+3. The receiver (or another machine on the network) spins up multiple parallel consumers pulling data from the Stardot's MJPEG endpoint. This data is simply pulled as fast as possible and discarded to stress the camera.
+4. The timestamped images can be checked for timing consistency and errors.
+
 ### 0. Machine Setup
 
 ```txt
@@ -13,13 +20,6 @@ One of the tests we was checking how the Stardot's push was affected by numerous
 ```
 
 You'll need to know the IP address of your Stardot and receiver machine for this.
-
-The experiment flow is as follows:
-
-1. The Stardot reads image _from same device used by the FTP uploader and Phenocam_ and sends to receiver.
-2. The receiver saves a timestamped image.
-3. The receiver (or another machine on the network) spins up multiple parallel consumers pulling data from the Stardot's MJPEG endpoint. This data is simply pulled as fast as possible and discarded to stress the camera.
-4. The timestamped images can be checked for timing consistency and errors.
 
 ### 1. Setup Stardot
 
