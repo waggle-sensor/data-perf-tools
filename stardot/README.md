@@ -44,10 +44,16 @@ chmod +x /etc/config/send-image.sh
 EOF
 ```
 
-Finally, add this line to `/etc/config/start` so it can run at start up.
+Now, add this line to `/etc/config/start` so it can run at start up.
 
 ```sh
 /etc/config/send-image.sh &
+```
+
+Finally, we want to save the config.
+
+```sh
+config save
 ```
 
 ### 2. Setup Receiver
