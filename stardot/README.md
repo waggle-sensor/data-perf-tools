@@ -53,7 +53,7 @@ Now, add this line to `/etc/config/start` so it can run at start up.
 /etc/config/send-image.sh &
 ```
 
-Finally, we want to save the config.
+Finally, we want to save the config so it persists between boots.
 
 ```sh
 config save
