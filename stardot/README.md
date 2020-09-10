@@ -2,23 +2,22 @@
 
 This test checks how the Stardot's push is affected by numerous simultanious heavy parallel pulls. The experiment flow is as follows:
 
-1. *Reproduce NEON Image Acquisition Behavior*: Every 30s, the Stardot reads image _from same device used by the FTP uploader and Phenocam_ and sends to receiver.
-2. *Log Data*: The receiver saves timestamped images as they are received.
+1. *Reproduce NEON Image Acquisition Behavior*: Every minute, the Stardot reads an image _from same device used by the FTP uploader and Phenocam_, timestamps it and does an FTP upload to the receiver.
+2. *Log Data*: The receiver run an pure-ftpd server which the Stardot uploads to.
 3. *Emulate Sage Nodes*: Stress Machine spins up multiple parallel consumers pulling data from the Stardot's MJPEG endpoint. This data is simply pulled as fast as possible and discarded to stress the camera.
 4. *Validation of NEON Image Stream*: The timestamped images will be checked for timing consistency and errors.
 
 ## 0. Machine Setup
 
 ```txt
-+---------+  Push JPEG every 30s  +------------------+
-| Stardot | --------------------> | Receiver Machine |
-+---------+                       +------------------+
++---------+  FTP upload JPEG every min  +------------------+
+| Stardot | --------------------------> | Receiver Machine |
++---------+                             +------------------+
     |||
     ||| Multiple parallel
     ||| video pulls.
 +----------------+
 | Stress Machine |
-|                |
 +----------------+
 ```
 
@@ -32,25 +31,32 @@ First, login into your Stardot.
 telnet stardot-ip
 ```
 
-Next, add the send image script.
+Next, add the following upload script to `/etc/config/upload-image.sh` and ensure it is executable.
 
 ```sh
-cat <<EOF > /etc/config/send-image.sh
-#!/bin/sh
+#!/bin/sh -e
 
-while true; do
-  cat /dev/video/jpeg0 | nc receiver-ip 10000
-  sleep 30
-done
+now=`date +%s`
+
+cat <<EOF > /tmp/upload.scr
+timeout 30
+open 10.0.0.5
+user stardot stardot
+passive
+ascii
+put /var/httpd/ip.html ip.html.tmp
+rename ip.html.tmp ip.html
+binary
+put /dev/video/jpeg0 camera0.jpg.tmp
+rename camera0.jpg.tmp "images/$now.jpg"
+quit
 EOF
-
-chmod +x /etc/config/send-image.sh
 ```
 
-Now, add this line to `/etc/config/start` so it can run at start up.
+Now, ensure that `/etc/config/crontab` includes the following line.
 
-```sh
-/etc/config/send-image.sh &
+```txt
+* * * * * admin /etc/config/upload-image.sh
 ```
 
 Finally, we want to save the config so it persists between boots.
@@ -61,25 +67,11 @@ config save
 
 ## 2. Setup Receiver
 
-The receiver listens for incoming images and saves them.
+My receiver is running on Ubuntu 20.04. I setup the machine as follows:
 
-Save the following script to `listen-for-images.sh` and chmod +x it.
-
-```sh
-#!/bin/sh
-
-mkdir -p images
-
-while true; do
-  if nc -l 10000 > image.jpg; then
-    name=images/"$(date +%s).jpg"
-    mv image.jpg "$name"
-    echo "added $name"
-  fi
-done
-```
-
-Running `./listen-for-images.sh` will start the listener and write each image received to `images/TIMESTAMP.jpg`.
+1. apt install `pure-ftpd`
+2. Create `stardot` user with password `stardot`
+3. Ensure `/home/stardot/images` directory exists. (This is the upload destination.)
 
 ## 3. Stressing Stardot
 
