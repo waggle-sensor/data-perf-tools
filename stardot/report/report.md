@@ -35,14 +35,16 @@ timestamp _and_ the Stardot timestamp.
 
 ## Data
 
+The raw CSV data is provided [here](data.csv).
+
 
 ### Time diffs based on receiver_ts
 
 #### General stats (diff seconds)
 ```
-count    1227.000000
-mean        0.048085
-std         2.350968
+count    1229.000000
+mean        0.048007
+std         2.349053
 min        -8.000000
 25%        -1.000000
 50%         0.000000
@@ -54,26 +56,26 @@ Name: receiver_ts, dtype: float64
 #### Top 20 largest time diffs (diff seconds)
 
 ```
-348     58.0
-834      5.0
-462      5.0
+349     58.0
+836      5.0
+464      5.0
 275      5.0
 123      4.0
-853      4.0
-943      4.0
-762      4.0
+855      4.0
+945      4.0
+764      4.0
 246      4.0
-949      4.0
-1189     4.0
+951      4.0
+1191     4.0
 157      4.0
-821      4.0
-501      4.0
-1100     4.0
+823      4.0
+503      4.0
+1102     4.0
 126      4.0
-1007     4.0
-523      4.0
-299      4.0
-362      4.0
+1009     4.0
+525      4.0
+300      4.0
+363      4.0
 Name: receiver_ts, dtype: float64
 ```
 
@@ -81,9 +83,9 @@ Name: receiver_ts, dtype: float64
 
 #### General stats (diff seconds)
 ```
-count    1227.000000
-mean        0.049715
-std         2.174666
+count    1229.000000
+mean        0.048820
+std         2.173102
 min        -6.000000
 25%        -1.000000
 50%         0.000000
@@ -95,25 +97,25 @@ Name: stardot_ts, dtype: float64
 #### Top 20 largest time diffs (diff seconds)
 
 ```
-348     59.0
-362      5.0
+349     59.0
+363      5.0
 77       4.0
 157      4.0
-821      4.0
-688      4.0
-873      4.0
+823      4.0
+690      4.0
+875      4.0
 177      3.0
-881      3.0
-1192     3.0
-345      3.0
-729      3.0
+883      3.0
+1194     3.0
+346      3.0
+731      3.0
 259      3.0
-1139     3.0
-1043     3.0
-978      3.0
-571      3.0
-834      3.0
-809      3.0
+1141     3.0
+1045     3.0
+980      3.0
+573      3.0
+836      3.0
+811      3.0
 196      3.0
 Name: stardot_ts, dtype: float64
 ```
