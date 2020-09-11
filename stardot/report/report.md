@@ -1,5 +1,7 @@
 # Stress Test Report
 
+## Overview
+
 This is a summary of the major stats about timing between consecutive image pushes.
 
 All times differences are measured as "seconds off from the expected 1/min
@@ -7,30 +9,40 @@ interval". For example, two images received at 10:31:05 and 10:32:07 will
 be presented as a time difference of +2 seconds. Negative values are allowed
 if an image arrives earlier than expected.
 
-To be fully transparent, the Stardot's date was incorrectly set to a time in 2019.
-Strictly speaking, this does not affect the analysis we're doing, since it only depends
-on time between timestamps. However, we have decided to include summaries based on both
-the receiver timestamp _and_ the Stardot timestamp.
-
 Each summary contains two items:
 
 * General stats including number of images, mean, std of the time between pushes.
 * Top 20 largest times between pushes intended to help understand the worst case.
 
-Collected images are not included here but they have all been manually checked for
-errors and none was found.
+## Results
 
-Finally, exactly _one_ out of the >1200 time gaps was 1 minute larger than expected
-and may have been caused by a failed FTP upload. Our test upload did not include
-any retry mechanism but this would have likely eliminated this example.
+The results are very promising. The push timing seems to be unaffected in a
+significant way by the consumers stress testing the video endpoint. Most timing
+differences with within a few seconds of the expected 1/min push.
 
-## Time diffs based on receiver_ts
+Images have also been manually checked and no errors were found.
 
-### General stats (diff seconds)
+Exactly _one_ out of the >1200 time gaps was 1 minute larger than expected and may have
+been caused by a failed FTP upload. Because this could have been caused by many
+factors and is a single example, it's hard to attribute this to the stress test
+alone. (Note that our test upload did not include any retry mechanism but this
+would have likely eliminated this example.)
+
+Finally, to be fully transparent, the Stardot's date was incorrectly set to a time
+in 2019. This does not affect the analysis we did since it only depends on difference
+in timestamps, however, we have still included summaries based on both the receiver
+timestamp _and_ the Stardot timestamp.
+
+## Data
+
+
+### Time diffs based on receiver_ts
+
+#### General stats (diff seconds)
 ```
-count    1220.000000
-mean        0.047541
-std         2.356504
+count    1227.000000
+mean        0.048085
+std         2.350968
 min        -8.000000
 25%        -1.000000
 50%         0.000000
@@ -39,39 +51,39 @@ max        58.000000
 Name: receiver_ts, dtype: float64
 ```
 
-### Top 20 largest time diffs (diff seconds)
+#### Top 20 largest time diffs (diff seconds)
 
 ```
-346     58.0
-829      5.0
-459      5.0
-273      5.0
-121      4.0
-848      4.0
-938      4.0
-757      4.0
-244      4.0
-944      4.0
-1183     4.0
-155      4.0
-816      4.0
-498      4.0
-1095     4.0
-124      4.0
-1002     4.0
-520      4.0
-297      4.0
-360      4.0
+348     58.0
+834      5.0
+462      5.0
+275      5.0
+123      4.0
+853      4.0
+943      4.0
+762      4.0
+246      4.0
+949      4.0
+1189     4.0
+157      4.0
+821      4.0
+501      4.0
+1100     4.0
+126      4.0
+1007     4.0
+523      4.0
+299      4.0
+362      4.0
 Name: receiver_ts, dtype: float64
 ```
 
-## Time diffs based on stardot_ts
+### Time diffs based on stardot_ts
 
-### General stats (diff seconds)
+#### General stats (diff seconds)
 ```
-count    1220.000000
-mean        0.048361
-std         2.179806
+count    1227.000000
+mean        0.049715
+std         2.174666
 min        -6.000000
 25%        -1.000000
 50%         0.000000
@@ -80,29 +92,29 @@ max        59.000000
 Name: stardot_ts, dtype: float64
 ```
 
-### Top 20 largest time diffs (diff seconds)
+#### Top 20 largest time diffs (diff seconds)
 
 ```
-346     59.0
-360      5.0
-75       4.0
-155      4.0
-816      4.0
-684      4.0
-868      4.0
-175      3.0
-876      3.0
-1186     3.0
-343      3.0
-725      3.0
-257      3.0
-1133     3.0
-1038     3.0
-973      3.0
-568      3.0
-829      3.0
-804      3.0
-194      3.0
+348     59.0
+362      5.0
+77       4.0
+157      4.0
+821      4.0
+688      4.0
+873      4.0
+177      3.0
+881      3.0
+1192     3.0
+345      3.0
+729      3.0
+259      3.0
+1139     3.0
+1043     3.0
+978      3.0
+571      3.0
+834      3.0
+809      3.0
+196      3.0
 Name: stardot_ts, dtype: float64
 ```
 
