@@ -22,11 +22,11 @@ differences with within a few seconds of the expected 1/min push.
 
 Images have also been manually checked and no errors were found.
 
-Exactly _one_ out of the >1200 time gaps was 1 minute larger than expected and may have
+A small number (<0.08%) have shown time gaps 1 minute larger than expected and may have
 been caused by a failed FTP upload. Because this could have been caused by many
-factors and is a single example, it's hard to attribute this to the stress test
-alone. (Note that our test upload did not include any retry mechanism but this
-would have likely eliminated this example.)
+factors and is such a small number of examples, it's hard to attribute this to
+the stress test alone. (Note that our test upload did not include any retry mechanism
+but this would have likely eliminated this example.)
 
 Finally, to be fully transparent, the Stardot's date was incorrectly set to a time
 in 2019. This does not affect the analysis we did since it only depends on difference
@@ -42,9 +42,9 @@ The raw CSV data is provided [here](data.csv).
 
 #### General stats (diff seconds)
 ```
-count    5383.000000
-mean        0.041241
-std         2.659580
+count    5394.000000
+mean        0.041713
+std         2.657451
 min       -14.000000
 50%         0.000000
 90%         2.000000
@@ -82,14 +82,14 @@ max        58.000000
 
 #### General stats (diff seconds)
 ```
-count    5383.000000
-mean        0.044399
-std         2.216136
+count    5394.000000
+mean        0.044865
+std         2.214576
 min       -11.000000
 50%         0.000000
 90%         2.000000
 99%         4.000000
-99.9%       7.618000
+99.9%       7.607000
 max        59.000000
 ```
 
